@@ -1,0 +1,87 @@
+$url = str_replace('data:image/png;base64,', '', $_POST['url']);
+        $url = str_replace(' ', '+', $url);
+        $data = base64_decode($url);
+        $uploadDir = "/home/muirislamfass/public_html/apps/blog/uploads/images";
+        chmod($uploadDir, 0777);
+        $file = $uploadDir.'/' . str_repeat(" ","-",$this->post_title).'-'.time() . '.jpg';
+        chmod($uploadDir, 0755);
+        file_put_contents($file, $data);
+
+
+
+
+$url = $_POST['url'];
+
+$image_name = $_POST[image_name];
+
+$uploadDir = "/home/muirislamfass/public_html/apps/blog/uploads/images";
+
+chmod($uploadDir, 0777);
+
+$file = $uploadDir.'/' . str_repeat(" ","-",$this->post_title).'-'.time() . '.jpg';
+
+chmod($uploadDir, 0755);
+
+$success = file_put_contents($file,$image_name, base64_decode($url));
+
+
+
+ // Get image string posted from Android App
+3
+    $base=$_REQUEST['url'];
+4
+    // Get file name posted from Android App
+5
+    $image_name = $_REQUEST['image_name'];
+6
+    // Decode Image
+7
+    $binary=base64_decode($base);
+8
+    header('Content-Type: bitmap; charset=utf-8');
+9
+    // Images will be saved under 'www/imgupload/uplodedimages' folder
+10
+    $file = fopen('/home/muirislamfass/public_html/apps/blog/uploads/'.$image_name, 'wb');
+11
+    // Create File
+12
+    fwrite($file, $binary);
+13
+    fclose($file);
+14
+    echo 'Image upload complete, Please check your php file directory';
+
+
+
+
+
+    $base=$_REQUEST['url'];
+    $binary=base64_decode($base);
+    header('Content-Type: bitmap; charset=utf-8');
+    $file = fopen('uploaded_image.jpg', 'wb');
+    fwrite($file, $binary);
+    fclose($file);
+    echo 'Image upload complete!!, Please check your php file directory……';
+
+
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $ImageData = $_POST['url'];
+        $ImageData = $_POST['imageName'];
+        $ImagePath = '/uploads/images/'.$imageName;
+       file_put_contents($ImagePath,base64_decode($ImageData));
+        
+        
+        
+        $insertSQL = "INSERT INTO images (name) values('$ImageName')";
+
+        if(mysqli_query($conn, $insertSQL)){
+            file_put_contents($ImagePath,base64_decode($ImageData));
+            echo "Your Image Has Been Uploaded.";
+        }
+
+        mysqli_close($conn);
+    } else {
+        echo "Please Try Again";
+    }
